@@ -30,7 +30,7 @@ TEST_DIR = .
 
 TESTS = glibc_mock_test
 
-CXX_FLAGS += -g -Wall -Wextra -std=c++11
+CXX_FLAGS += -g -Wall -Wextra -std=c++11 -fno-pie
 
 SRC_OBJS  = $(patsubst $(SRC_DIR)/%.cc, $(SRC_DIR)/%.o, $(wildcard $(SRC_DIR)/*.cc))
 TEST_OBJS = $(patsubst $(TEST_DIR)/%.cc, $(TEST_DIR)/%.o, $(wildcard $(TEST_DIR)/*.cc))
@@ -50,4 +50,4 @@ $(TEST_DIR)/%.o : $(TEST_DIR)/%.cc
 	$(CXX) -I$(SRC_DIR) -I$(TEST_DIR) $(CXX_FLAGS) -c $< -o $@
 
 $(TESTS) : $(TEST_OBJS) $(SRC_OBJS)
-	$(CXX) -z relro -z now $^ -o $@ -pthread -lgcov
+	$(CXX) -z relro -z now $^ -o $@ -pthread -lgcov -no-pie
